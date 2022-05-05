@@ -1,4 +1,4 @@
-# Angular highly scalable architecture
+# Angular boilerplate smaple for enterprise application
 
 It's a pattern that fits nicely in the context of developing front-end applications and enables developers to write maintainable and extensible code.
 
