@@ -1,0 +1,90 @@
+<div class="card">
+  <div class="card-header">Read Location</div>
+  <div class="card-body">
+    <div *ngIf="(loading | async) === false; else NoData">
+      <!-- searc form -->
+      <div class="search-align">
+        <form
+          class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0"
+        >
+          <div class="input-group">
+            <input
+              class="form-control"
+              type="text"
+              placeholder="Search for..."
+              (keyup)="search($event.target.value)"
+              aria-label="Search"
+              aria-describedby="basic-addon2"
+            />
+            <!-- <div class="input-group-append">
+              <button class="btn btn-primary" type="button">
+                <i class="fas fa-search"></i>
+              </button>
+            </div> -->
+          </div>
+        </form>
+      </div>
+      <!-- Data table -->
+      <div class="mt-2">
+        <table
+          class="table"
+          [mfData]="filterUser"
+          #mf="mfDataTable"
+          [mfRowsOnPage]="2"
+        >
+          <thead>
+            <tr>
+              <th style="width: 10%;">
+                <mfDefaultSorter by="Username">{{
+                  "username" | translate
+                }}</mfDefaultSorter>
+              </th>
+              <th style="width: 50%;">
+                <mfDefaultSorter by="note">{{
+                  "note" | translate
+                }}</mfDefaultSorter>
+              </th>
+              <th style="width: 10%;">
+                <mfDefaultSorter by="">{{
+                  "location" | translate
+                }}</mfDefaultSorter>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of mf.data">
+              <td>{{ item.username }}</td>
+              <td>{{ item.note }}</td>
+              <td>
+                <div>
+                  <agm-map [latitude]="item.lat" [longitude]="item.lng">
+                    <agm-marker [latitude]="item.lat" [longitude]="item.lng">
+                      <agm-info-window
+                        >Username : {{ item.username }} <br />
+                        Note : {{ item.note }}</agm-info-window
+                      >
+                    </agm-marker>
+                  </agm-map>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4">
+                <mfBootstrapPaginator
+                  [rowsOnPageSet]="[4, 8, 16]"
+                ></mfBootstrapPaginator>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+    <ng-template #NoData>
+      <div class="alert alert-primary" role="alert">
+        No Record Found
+      </div>
+    </ng-template>
+  </div>
+</div>

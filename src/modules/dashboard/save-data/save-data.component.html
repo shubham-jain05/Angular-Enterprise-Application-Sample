@@ -1,0 +1,69 @@
+<div class="card">
+  <div class="card-header">
+    Save Location
+  </div>
+  <div class="card-body">
+    <div class="mt-1">
+      <agm-map
+        [latitude]="lat"
+        [longitude]="lng"
+        (mapClick)="onChooseLocation($event)"
+      >
+        <agm-marker [latitude]="lat" [longitude]="lng" *ngIf="locationChosen">
+          <agm-info-window
+            >Username : {{ username.value }} <br />
+            Note : {{ note.value }}</agm-info-window
+          >
+        </agm-marker>
+      </agm-map>
+    </div>
+    <div class="mt-2">
+      <form [formGroup]="localForm" (ngSubmit)="onSubmit()">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">User Name</span>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="username"
+            [ngClass]="{ 'is-invalid': submitted && f.username.errors }"
+            #username
+          />
+          <div *ngIf="submitted && f.username.errors">
+            <div *ngIf="f.username.errors.required">
+              <span style="color: red;">Username is required</span>
+            </div>
+            <div *ngIf="f.username.errors.maxLength">
+              <span style="color: red;">Username Max Length is reached </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text">NOTE</span>
+          </div>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="note"
+            [ngClass]="{ 'is-invalid': submitted && f.note.errors }"
+            #note
+          />
+
+          <div *ngIf="submitted && f.note.errors">
+            <div *ngIf="f.note.errors.required">
+              <span style="color: red;">Note is required</span>
+            </div>
+            <div *ngIf="f.note.errors.maxLength">
+              <span style="color: red;">Note Max Length is reached</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
